@@ -1,0 +1,616 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* CSS complet d'accueil Billes & Calculs (repris du HTML fourni) */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Comic Neue', 'Arial', sans-serif;
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.header {
+    min-height: 240px;
+    height: 320px;
+    background:
+        linear-gradient(rgba(76, 175, 80, 0.8), rgba(33, 150, 243, 0.8)),
+        url('/header_background-image.jpg') center/cover no-repeat;
+    color: white;
+    padding: 48px 0 32px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, #4CAF50, #2196F3, #FF9800, #E91E63);
+    opacity: 0.10;
+    pointer-events: none;
+    animation: rainbow 5s ease-in-out infinite alternate;
+    z-index: 1;
+}
+
+.header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/header_background-image.jpg') center/cover no-repeat;
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    background: #fff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #4CAF50;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+.app-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 5px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* --- Suite du CSS d'accueil Billes & Calculs (complément) --- */
+
+.nav-container {
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 15px 0;
+}
+
+.nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.nav-btn {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.nav-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.nav-btn.secondary {
+    background: linear-gradient(45deg, #2196F3, #1976D2);
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+}
+
+.nav-btn.secondary:hover {
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+}
+
+.main-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.welcome-section {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,193,7,0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.welcome-title {
+    font-size: 2.2rem;
+    color: #4CAF50;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.welcome-text {
+    font-size: 1.3rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.level-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.level-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.level-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.student-card {
+    grid-column: 2;
+    grid-row: 1;
+    border-top: 5px solid #E91E63;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.student-form {
+    margin-bottom: 25px;
+    flex: 1 0 auto;
+}
+
+/* Correction pour aligner le bouton "Se connecter" avec les boutons des autres cartes */
+.student-card .start-btn.student-btn {
+    margin-top: auto;
+    /* Pour occuper tout l'espace restant et aligner le bouton en bas */
+}
+
+.level-card.level-1 {
+    grid-column: 1;
+    grid-row: 1;
+    border-top: 5px solid #4CAF50;
+}
+
+.level-card.level-2 {
+    grid-column: 1;
+    grid-row: 2;
+    border-top: 5px solid #FF9800;
+}
+
+.level-card.level-3 {
+    grid-column: 2;
+    grid-row: 2;
+    border-top: 5px solid #9C27B0;
+}
+
+.level-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 20px;
+    color: white;
+}
+
+.student-card .level-icon {
+    background: linear-gradient(45deg, #E91E63, #C2185B);
+}
+
+.level-1 .level-icon {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+}
+
+.level-2 .level-icon {
+    background: linear-gradient(45deg, #FF9800, #F57C00);
+}
+
+.level-3 .level-icon {
+    background: linear-gradient(45deg, #9C27B0, #7B1FA2);
+}
+
+.level-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.level-description {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.level-features {
+    list-style: none;
+    margin-bottom: 25px;
+}
+
+.level-features li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+    color: #555;
+}
+
+.level-features li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+    top: 8px;
+}
+
+.student-form {
+    margin-bottom: 25px;
+}
+
+.student-input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    text-align: center;
+    font-family: inherit;
+}
+
+.student-input:focus {
+    outline: none;
+    border-color: #E91E63;
+    box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1);
+}
+
+.student-status {
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.student-status.connected {
+    background: rgba(76, 175, 80, 0.1);
+    color: #4CAF50;
+    border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.student-status.disconnected {
+    background: rgba(158, 158, 158, 0.1);
+    color: #666;
+    border: 1px solid rgba(158, 158, 158, 0.3);
+}
+
+.start-btn {
+    width: 100%;
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+}
+
+.start-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.student-btn {
+    background: linear-gradient(45deg, #E91E63, #C2185B);
+}
+
+.student-btn:hover:not(:disabled) {
+    box-shadow: 0 5px 15px rgba(233, 30, 99, 0.4);
+}
+
+.level-2 .start-btn {
+    background: linear-gradient(45deg, #FF9800, #F57C00);
+}
+
+.level-2 .start-btn:hover:not(:disabled) {
+    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+}
+
+.level-3 .start-btn {
+    background: linear-gradient(45deg, #9C27B0, #7B1FA2);
+}
+
+.level-3 .start-btn:hover:not(:disabled) {
+    box-shadow: 0 5px 15px rgba(156, 39, 176, 0.4);
+}
+
+.partners-section {
+    background: white;
+    padding: 40px 0;
+    margin-top: 50px;
+    border-radius: 20px 20px 0 0;
+}
+
+.partners-title {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #4CAF50;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.partners-carousel {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.partners-track {
+    display: flex;
+    animation: scroll 30s linear infinite;
+    gap: 50px;
+    align-items: center;
+}
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.partner-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 150px;
+    text-align: center;
+}
+
+.partner-logo {
+    width: 80px;
+    height: 80px;
+    background: #f5f5f5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: #4CAF50;
+    border: 2px solid #e0e0e0;
+}
+
+.partner-name {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: bold;
+}
+
+.footer {
+    background: linear-gradient(45deg, #2c3e50, #34495e);
+    color: white;
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 0;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-text {
+    margin-bottom: 15px;
+    opacity: 0.9;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.footer-links a {
+    color: #ecf0f1;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #4CAF50;
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+    .app-title {
+        font-size: 2rem;
+    }
+    .nav-content {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+    .level-cards {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+    .student-card,
+    .level-card.level-1,
+    .level-card.level-2,
+    .level-card.level-3 {
+        grid-column: 1;
+        grid-row: auto;
+    }
+    .footer-links {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.sound-wave {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    opacity: 0.3;
+}
+
+.sound-wave::before,
+.sound-wave::after {
+    content: '';
+    position: absolute;
+    border: 2px solid #FFD700;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.sound-wave::before {
+    width: 20px;
+    height: 20px;
+    top: 5px;
+    left: 5px;
+}
+
+.sound-wave::after {
+    width: 30px;
+    height: 30px;
+    animation-delay: 0.5s;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.8); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* --- Fin du CSS d'accueil Billes & Calculs --- */
