@@ -137,12 +137,12 @@ export default function Home() {
   return (
     <>
       {/* Header avec logo et titre */}
-      <header className="header">
+      <header className="header w-full bg-white/80">
         <div className="sound-wave"></div>
-        <div className="header-content">
-          <div className="logo-section">
-            <div className="logo flex items-center justify-center p-0 w-[180px] h-[44px]">
-              <Image src="/ceredis.png" alt="Logo CEREDIS" width={177} height={43} className="rounded-lg object-contain w-[177px] h-[43px] p-0 m-0" />
+        <div className="header-content flex items-center w-full max-w-none ml-0 pl-8">
+          <div className="logo-section flex items-center">
+            <div className="logo flex items-center justify-center bg-white rounded-lg shadow p-0" style={{ width: '246px', height: '60px' }}>
+              <Image src="/ceredis.png" alt="Logo CEREDIS" width={236} height={57} className="object-contain" style={{ margin: 0, padding: 0, width: '236px', height: '57px' }} />
             </div>
             <div>
               <h1 className="app-title">Billes & Calculs</h1>
