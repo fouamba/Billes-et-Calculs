@@ -55,7 +55,7 @@ export default function Home() {
     if (isConnected) {
       alert(`🎮 Élève connecté : ${studentName}\nTu peux maintenant choisir un niveau !`);
     } else {
-      alert("🎮 Identifie-toi d\'abord dans la carte 'Identification Élève' pour commencer !");
+      alert("🎮 Identifie-toi d&apos;abord dans la carte &apos;Identification Élève&apos; pour commencer !");
       studentInputRef.current?.focus();
     }
   };
@@ -63,7 +63,7 @@ export default function Home() {
     if (isConnected) {
       alert(`📊 Progrès de ${studentName}\n\nNiveau 1: En cours\nNiveau 2: Non débloqué\nNiveau 3: Non débloqué\n\n(Dashboard détaillé à développer)`);
     } else {
-      alert("📊 Identifie-toi d\'abord pour voir tes progrès !");
+      alert("📊 Identifie-toi d&apos;abord pour voir tes progrès !");
     }
   };
   const showHelp = () => {
@@ -71,7 +71,7 @@ export default function Home() {
   };
   const startLevel = (level: 1|2|3) => {
     if (!isConnected) {
-      alert("🔒 Identifie-toi d\'abord pour jouer !");
+      alert("🔒 Identifie-toi d&apos;abord pour jouer !");
       studentInputRef.current?.focus();
       return;
     }
