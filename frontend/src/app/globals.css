@@ -389,6 +389,12 @@ body {
     border: 1px solid rgba(158, 158, 158, 0.3);
 }
 
+.student-status--pending {
+  background: rgba(255, 193, 7, 0.1);
+  color: #FF9800;
+  border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
 .start-btn {
     width: 100%;
     background: linear-gradient(45deg, #4CAF50, #45a049);

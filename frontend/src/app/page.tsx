@@ -126,11 +126,9 @@ export default function Home() {
   // Gestion du style du status
   let statusClass = 'student-status disconnected';
   let statusText = '🔒 Non identifié';
-  let statusStyle: React.CSSProperties = {};
   if (status === 'pending') {
     statusText = `👋 Salut ${studentName} !`;
     statusClass = 'student-status';
-    statusStyle = { background: 'rgba(255, 193, 7, 0.1)', color: '#FF9800', border: '1px solid rgba(255, 193, 7, 0.3)' };
   } else if (status === 'connected') {
     statusText = `✅ Connecté : ${studentName}`;
     statusClass = 'student-status connected';
@@ -143,8 +141,8 @@ export default function Home() {
         <div className="sound-wave"></div>
         <div className="header-content">
           <div className="logo-section">
-            <div className="logo" style={{padding:0, width:180, height:44, display:'flex', alignItems:'center', justifyContent:'center'}}>
-              <Image src="/ceredis.png" alt="Logo CEREDIS" width={177} height={43} style={{borderRadius:8, objectFit:'contain', width:177, height:43, padding:0, margin:0}} />
+            <div className="logo flex items-center justify-center p-0 w-[180px] h-[44px]">
+              <Image src="/ceredis.png" alt="Logo CEREDIS" width={177} height={43} className="rounded-lg object-contain w-[177px] h-[43px] p-0 m-0" />
             </div>
             <div>
               <h1 className="app-title">Billes & Calculs</h1>
@@ -165,10 +163,9 @@ export default function Home() {
       <main className="main-container">
         {/* Section d'accueil */}
         <section className="welcome-section fade-in">
-          <h2 className="welcome-title">Bienvenue dans l'aventure des mathématiques ! 🌟</h2>
+          <h2 className="welcome-title">Bienvenue dans l&apos;aventure des mathématiques ! 🌟</h2>
           <p className="welcome-text">
-            Découvre les additions et soustractions en manipulant des billes colorées dans un univers 3D magique. 
-            Progresse à ton rythme à travers 3 niveaux passionnants et deviens un champion des calculs !
+            Découvre les additions et soustractions en manipulant des billes colorées dans un univers 3D magique. Progresse à ton rythme à travers 3 niveaux passionnants et deviens un champion des calculs&nbsp;!
           </p>
         </section>
         {/* Cartes des niveaux et identification élève */}
@@ -191,7 +188,7 @@ export default function Home() {
                 maxLength={30}
                 autoComplete="off"
               />
-              <div className={statusClass} style={statusStyle}>
+              <div className={status === 'pending' ? 'student-status student-status--pending' : statusClass}>
                 {statusText}
               </div>
             </div>
@@ -208,7 +205,7 @@ export default function Home() {
             <div className="level-icon">🎲</div>
             <h3 className="level-title">Niveau 1 - Manipulation</h3>
             <p className="level-description">
-              Apprends en manipulant directement les billes colorées. Découvre les secrets de l'addition et de la soustraction !
+              Apprends en manipulant directement les billes colorées. Découvre les secrets de l&apos;addition et de la soustraction !
             </p>
             <ul className="level-features">
               <li>Manipule des billes rouges et bleues</li>
@@ -217,10 +214,9 @@ export default function Home() {
               <li>Apprentissage par la découverte</li>
             </ul>
             <button
-              className="start-btn"
+              className={`start-btn${!levelButtonsEnabled ? ' opacity-60' : ' opacity-100'}`}
               onClick={() => startLevel(1)}
               disabled={!levelButtonsEnabled}
-              style={{ opacity: levelButtonsEnabled ? 1 : 0.6 }}
             >
               Commencer le Niveau 1
             </button>
@@ -239,10 +235,9 @@ export default function Home() {
               <li>Expression de la pensée</li>
             </ul>
             <button
-              className="start-btn"
+              className={`start-btn${!levelButtonsEnabled ? ' opacity-60' : ' opacity-100'}`}
               onClick={() => startLevel(2)}
               disabled={!levelButtonsEnabled}
-              style={{ opacity: levelButtonsEnabled ? 1 : 0.6 }}
             >
               Commencer le Niveau 2
             </button>
@@ -261,10 +256,9 @@ export default function Home() {
               <li>Validation par manipulation</li>
             </ul>
             <button
-              className="start-btn"
+              className={`start-btn${!levelButtonsEnabled ? ' opacity-60' : ' opacity-100'}`}
               onClick={() => startLevel(3)}
               disabled={!levelButtonsEnabled}
-              style={{ opacity: levelButtonsEnabled ? 1 : 0.6 }}
             >
               Commencer le Niveau 3
             </button>
@@ -301,7 +295,7 @@ export default function Home() {
             <a href="#privacy">Confidentialité</a>
             <a href="#support">Support</a>
           </div>
-          <p className="footer-text">Développé avec ❤️ pour l'éducation des enfants</p>
+          <p className="footer-text">Développé avec ❤️ pour l&apos;éducation des enfants</p>
         </div>
       </footer>
     </>
