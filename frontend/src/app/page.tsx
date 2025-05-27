@@ -288,7 +288,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="footer">
         <div className="footer-content">
-          <p className="footer-text">© 2025 Billes & Calculs - Projet pédagogique innovant</p>
+          <p className="footer-text">© 2025 CEREDIS - Billes & Calculs - Projet pédagogique innovant</p>
           <div className="footer-links">
             <a href="#about">À propos</a>
             <a href="#contact">Contact</a>
