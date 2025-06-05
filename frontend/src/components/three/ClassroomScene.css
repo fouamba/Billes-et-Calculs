@@ -1,0 +1,69 @@
+.scene3d-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+}
+.scene3d-plateau {
+  position: absolute;
+  width: 100%;
+  height: 66%;
+  bottom: 0;
+  background: #fef3c7;
+  border-bottom: 4px solid #fde68a;
+  border-radius: 0 0 2rem 2rem;
+}
+.scene3d-marble {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  z-index: 2;
+}
+.scene3d-marble.red {
+  background: #EF4444;
+}
+.scene3d-marble.blue {
+  background: #3B82F6;
+}
+.scene3d-carton {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 160px;
+  height: 96px;
+  background: #b45309;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: #fff;
+  box-shadow: 0 4px 24px #0002;
+  z-index: 3;
+}
+.scene3d-teacher {
+  position: absolute;
+  left: 2rem;
+  top: 2rem;
+  width: 80px;
+  height: 80px;
+  background: #92400e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #fff;
+  z-index: 4;
+}
+.scene3d-phase {
+  position: absolute;
+  right: 2rem;
+  top: 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #2563eb;
+  z-index: 4;
+}

@@ -1,0 +1,94 @@
+// Schéma Prisma principal conforme au cahier des charges
+model User {
+  id          String   @id @default(cuid())
+  email       String?  @unique
+  name        String?
+  role        Role     @default(STUDENT)
+  grade       Grade?
+  birthDate   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  sessions    Session3D[]
+  activities  Activity3D[]
+  progress    Progress[]
+
+  @@map("users")
+}
+
+model Session3D {
+  id          String   @id @default(cuid())
+  userId      String
+  type        SessionType
+  startedAt   DateTime @default(now())
+  completedAt DateTime?
+  duration    Int?
+  activitiesCompleted Int @default(0)
+  correctAnswers      Int @default(0)
+  badgeEarned        Boolean @default(false)
+
+  // Relations
+  user        User @relation(fields: [userId], references: [id])
+  activities  Activity3D[]
+
+  @@map("sessions_3d")
+}
+
+model Activity3D {
+  id          String @id @default(cuid())
+  sessionId   String
+  userId      String
+  type        ActivityType
+  marbleConfiguration Json
+  numberRange Int[]
+  isCorrect   Boolean
+  responseTime Int
+  interactions Json
+  speechData   Json?
+
+  // Relations
+  session     Session3D @relation(fields: [sessionId], references: [id])
+  user        User @relation(fields: [userId], references: [id])
+
+  @@map("activities_3d")
+}
+
+model Progress {
+  id          String @id @default(cuid())
+  userId      String
+  conceptualScope Float
+  compositionMastery Float
+  decompositionMastery Float
+  implicitConceptualization Boolean
+  measuredAt  DateTime @default(now())
+
+  // Relations
+  user        User @relation(fields: [userId], references: [id])
+
+  @@map("progress")
+}
+
+enum Role {
+  STUDENT
+  TEACHER
+  RESEARCHER
+  ADMIN
+}
+
+enum Grade {
+  CP
+  CE1
+  CE2
+}
+
+enum SessionType {
+  PRETEST
+  TRAINING
+  POSTTEST
+}
+
+enum ActivityType {
+  COMPOSITION
+  DECOMPOSITION
+}

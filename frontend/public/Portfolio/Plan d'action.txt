@@ -1,0 +1,75 @@
+Plan d'action
+
+
+Après analyse des documents, voici le bilan des modifications architecturales majeures :
+
+1. Modifications Structurelles Majeures
+Architecture Monorepo
+
+Migration vers une architecture monorepo avec 3 apps principales :
+apps/web : Application Next.js
+apps/learning-locker : LRS
+apps/r-studio : Analytics avancés
+Introduction de packages partagés dans packages/
+Organisation du Code
+
+Adoption du App Router Next.js 14+
+Nouvelle structure par domaine fonctionnel :
+Services Dédiés
+
+Séparation claire des services :
+2. Améliorations Techniques
+Infrastructure
+
+Migration vers Vercel (app principale)
+Déploiement Learning Locker sur Fly.io
+Base de données hybride :
+PostgreSQL Neon (données app)
+MongoDB Atlas (traces xAPI)
+Analytics
+
+Intégration RStudio Server
+Dashboards personnalisés par profil
+API GraphQL pour requêtes analytics
+xAPI Implementation
+
+Service xAPI avec batching
+Vocabulaire standardisé
+Tracking granulaire des interactions
+3. Plan d'Action pour la Suite
+Phase 1 : Migration Infrastructure (2-3 semaines)
+
+<input checked="" disabled="" type="checkbox"> Setup monorepo avec Turborepo
+<input disabled="" type="checkbox"> Migration vers Vercel
+<input disabled="" type="checkbox"> Déploiement Learning Locker sur Fly.io
+<input disabled="" type="checkbox"> Configuration bases de données
+Phase 2 : Implémentation Core (4-5 semaines)
+
+<input disabled="" type="checkbox"> Migration vers App Router
+<input disabled="" type="checkbox"> Setup composants Three.js
+<input disabled="" type="checkbox"> Implémentation services xAPI
+<input disabled="" type="checkbox"> Intégration RStudio
+Phase 3 : Analytics (3-4 semaines)
+
+<input disabled="" type="checkbox"> Setup dashboards Learning Locker
+<input disabled="" type="checkbox"> Développement analyses R
+<input disabled="" type="checkbox"> Implémentation API GraphQL
+<input disabled="" type="checkbox"> Tests d'intégration
+Phase 4 : Features Avancées (4-5 semaines)
+
+<input disabled="" type="checkbox"> Système adaptatif
+<input disabled="" type="checkbox"> Reconnaissance vocale
+<input disabled="" type="checkbox"> Gamification
+<input disabled="" type="checkbox"> UI/UX améliorée
+Phase 5 : Tests et Optimisation (2-3 semaines)
+
+<input disabled="" type="checkbox"> Tests E2E Playwright
+<input disabled="" type="checkbox"> Tests xAPI
+<input disabled="" type="checkbox"> Optimisation performance
+<input disabled="" type="checkbox"> Documentation
+Phase 6 : Déploiement (2 semaines)
+
+<input disabled="" type="checkbox"> Tests utilisateurs
+<input disabled="" type="checkbox"> Fixes bugs
+<input disabled="" type="checkbox"> Documentation finale
+<input disabled="" type="checkbox"> Formation enseignants/chercheurs

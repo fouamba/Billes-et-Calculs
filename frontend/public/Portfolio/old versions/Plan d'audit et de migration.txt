@@ -1,0 +1,46 @@
+1. Audit de la structure actuelle
+Actions immédiates :
+Lister l’arborescence actuelle de src/, public/, prisma, docs/ (si existant).
+Identifier les composants déjà développés (3D, UI, logique pédagogique, analytics, etc.).
+Repérer les fichiers/folders à migrer ou renommer pour coller à la nomenclature cible.
+Outils :
+Utiliser la commande suivante dans le terminal pour obtenir l’arborescence :
+Ouvrir ce fichier pour comparer avec la structure cible du document.
+2. Migration des dossiers et fichiers
+Étapes concrètes :
+a) Création de la structure cible
+Créer les dossiers manquants dans src/ :
+components/three/scenes/
+components/three/objects/
+components/three/animations/
+components/three/controls/
+components/three/hooks/
+components/activity/
+components/speech/
+components/ui/
+lib/adaptive/, lib/analytics/, lib/speech/, lib/r-integration/
+types/three/, types/activity/, etc.
+docs/ (pour la documentation technique et pédagogique)
+b) Déplacement et renommage
+Déplacer chaque composant/fichier existant dans le dossier approprié.
+Ex : ClassroomScene.tsx → components/three/scenes/ClassroomScene.tsx
+Ex : MarbleComponent.tsx → components/three/objects/MarbleComponent.tsx
+Ex : TeacherAvatar.tsx → components/three/objects/TeacherAvatar.tsx
+Ex : GamePage.tsx → components/activity/GamePage.tsx (ou GameScene3D.tsx selon la logique)
+Mettre à jour tous les imports dans le code pour refléter les nouveaux chemins.
+c) Nettoyage
+Supprimer les dossiers/fichiers obsolètes ou redondants.
+S’assurer que chaque composant a un rôle clair et unique.
+3. Vérification et adaptation
+Vérifier le fonctionnement de l’application après chaque déplacement (build, lint, tests).
+Adapter les alias dans tsconfig.json pour pointer vers les nouveaux chemins.
+Documenter chaque migration dans un fichier docs/architecture/migration-log.md.
+4. Prochaine étape
+Une fois la migration terminée, faire un commit de migration avec un message clair.
+Passer à la configuration avancée (TypeScript, Prisma, CI/CD) et à la modularisation des composants 3D et logiques métier.
+Résumé
+On commence par lister et comparer l’existant.
+On crée la structure cible.
+On déplace/renomme les fichiers.
+On adapte les imports et les alias.
+On vérifie le build à chaque étape.

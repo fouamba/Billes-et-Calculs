@@ -141,7 +141,7 @@ export default function Home() {
         <div className="sound-wave"></div>
         <div className="header-content flex items-center w-full max-w-none ml-0 pl-8">
           <div className="logo-section flex items-center">
-            <div className="logo flex items-center justify-center bg-white rounded-lg shadow p-0" style={{ width: '246px', height: '60px' }}>
+            <div className="logo flex items-center justify-center bg-white rounded-lg shadow p-0">
               <Image src="/ceredis.png" alt="Logo CEREDIS" width={236} height={57} className="object-contain" style={{ margin: 0, padding: 0, width: '236px', height: '57px' }} />
             </div>
             <div>
@@ -168,11 +168,11 @@ export default function Home() {
             Découvre les additions et soustractions en manipulant des billes colorées dans un univers 3D magique. Progresse à ton rythme à travers 3 niveaux passionnants et deviens un champion des calculs&nbsp;!
           </p>
         </section>
-        {/* Cartes des niveaux et identification élève */}
-        <section className="level-cards fade-in">
+        {/* Cartes d'authentification */}
+        <section className="level-cards fade-in grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Carte d'identification élève */}
           <div className="level-card student-card">
-            <div className="level-icon">👤</div>
+            <div className="level-icon student">👤</div>
             <h3 className="level-title">Identification Élève</h3>
             <p className="level-description">
               Identifie-toi pour sauvegarder tes progrès et accéder à tes niveaux personnalisés !
@@ -200,68 +200,21 @@ export default function Home() {
               {connectBtnText}
             </button>
           </div>
-          {/* Niveau 1 */}
-          <div className="level-card level-1">
-            <div className="level-icon">🎲</div>
-            <h3 className="level-title">Niveau 1 - Manipulation</h3>
+          {/* Carte d'authentification enseignant */}
+          <div className="level-card teacher-card">
+            <div className="level-icon teacher">🧑‍🏫</div>
+            <h3 className="level-title">Espace Enseignant</h3>
             <p className="level-description">
-              Apprends en manipulant directement les billes colorées. Découvre les secrets de l&apos;addition et de la soustraction !
+              Accédez au tableau de bord enseignant pour suivre la progression de vos élèves et gérer les sessions.
             </p>
-            <ul className="level-features">
-              <li>Manipule des billes rouges et bleues</li>
-              <li>Nombres de 1 à 5</li>
-              <li>Environnement 3D interactif</li>
-              <li>Apprentissage par la découverte</li>
-            </ul>
-            <button
-              className={`start-btn${!levelButtonsEnabled ? ' opacity-60' : ' opacity-100'}`}
-              onClick={() => startLevel(1)}
-              disabled={!levelButtonsEnabled}
-            >
-              Commencer le Niveau 1
-            </button>
-          </div>
-          {/* Niveau 2 */}
-          <div className="level-card level-2">
-            <div className="level-icon">📝</div>
-            <h3 className="level-title">Niveau 2 - Schématisation</h3>
-            <p className="level-description">
-              Dessine et représente tes stratégies ! Crée des schémas pour expliquer tes raisonnements mathématiques.
-            </p>
-            <ul className="level-features">
-              <li>Outils de dessin intégrés</li>
-              <li>Nombres de 1 à 10</li>
-              <li>Création de diagrammes</li>
-              <li>Expression de la pensée</li>
-            </ul>
-            <button
-              className={`start-btn${!levelButtonsEnabled ? ' opacity-60' : ' opacity-100'}`}
-              onClick={() => startLevel(2)}
-              disabled={!levelButtonsEnabled}
-            >
-              Commencer le Niveau 2
-            </button>
-          </div>
-          {/* Niveau 3 */}
-          <div className="level-card level-3">
-            <div className="level-icon">🧮</div>
-            <h3 className="level-title">Niveau 3 - Abstraction</h3>
-            <p className="level-description">
-              Maîtrise les équations formelles ! Résous des problèmes avec des symboles mathématiques comme un vrai mathématicien.
-            </p>
-            <ul className="level-features">
-              <li>Équations formelles (a + b = c)</li>
-              <li>Nombres de 1 à 20</li>
-              <li>Calcul mental avancé</li>
-              <li>Validation par manipulation</li>
-            </ul>
-            <button
-              className={`start-btn${!levelButtonsEnabled ? ' opacity-60' : ' opacity-100'}`}
-              onClick={() => startLevel(3)}
-              disabled={!levelButtonsEnabled}
-            >
-              Commencer le Niveau 3
-            </button>
+            <div className="teacher-form">
+              <button
+                className="start-btn teacher-btn"
+                onClick={() => alert('🔐 Accès au tableau de bord enseignant (fonctionnalité à implémenter)')}
+              >
+                Accéder au tableau de bord
+              </button>
+            </div>
           </div>
         </section>
       </main>

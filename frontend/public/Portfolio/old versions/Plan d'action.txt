@@ -1,0 +1,41 @@
+Voici un plan d’action concret pour aligner le code et l’organisation de Billes-et-Calculs sur les recommandations du document billes_calculs_analysis.md :
+
+1. Audit et Migration de la Structure de Dossiers
+Vérifier la structure actuelle du dossier src/ et la comparer à l’architecture recommandée.
+Créer les dossiers manquants (ex : components/three/objects, components/three/animations, lib/adaptive, lib/analytics, types/three, etc.).
+Déplacer/renommer les composants existants pour respecter la nomenclature (ex : MarbleComponent, TeacherAvatar, ClassroomScene, etc.).
+Créer un dossier docs/ pour centraliser cahier des charges, architecture, pédagogie, déploiement.
+2. Fondations Techniques
+Mettre à jour tsconfig.json avec les options et alias recommandés (voir l’exemple du document).
+Vérifier la configuration Prisma : adapter le schéma pour les activités 3D, traces fines, animations, etc.
+Configurer le pipeline CI/CD (tests, lint, build) si ce n’est pas déjà fait.
+3. Composants 3D et UI
+Créer/adapter les composants 3D dans components/three/objects/ et components/three/scenes/ :
+MarbleComponent.tsx (physique, animations)
+TeacherAvatar.tsx (GLB, animations, émotions)
+TablePlatform.tsx, HidingBox.tsx
+Créer les hooks spécialisés dans components/three/hooks/ (ex : useMarblePhysics, useActivityState).
+Structurer l’UI dans components/ui/ (boutons, badges, input, feedback, etc.).
+4. Logique Pédagogique et Adaptative
+Créer les modules d’activité dans components/activity/ (composition, décomposition, feedback, progression).
+Développer la logique adaptative dans lib/adaptive/ (génération de nombres, ajustement difficulté, détection conceptualisation).
+Respecter la logique adidactique : feedback du milieu, pas de guidage explicite, institutionnalisation différée.
+5. Speech, Analytics et RStudio
+Créer les modules de synthèse/reconnaissance vocale dans components/speech/ et lib/speech/.
+Développer la traçabilité fine dans lib/analytics/ (traces, analyse, export).
+Préparer l’intégration RStudio dans lib/r-integration/ (scripts, export, analyse cognitive).
+6. Tests et Validation
+Structurer les tests dans __tests__/ (unitaires, intégration, e2e).
+Préparer des jeux de données pour valider la détection des conceptualisations et la conformité pédagogique.
+7. Documentation et Suivi
+Documenter chaque module (README, commentaires, guides d’utilisation).
+Mettre à jour le dossier docs/ à chaque évolution majeure.
+Suivre les KPIs proposés dans le document pour piloter le projet.
+8. Roadmap Prioritaire (4 premières semaines)
+Semaine 1 : Audit, migration structure, configuration TypeScript/Prisma, prototype 3D minimal.
+Semaine 2 : Composants 3D core, UI, pipeline analytics de base.
+Semaine 3 : Logique adaptative, feedback, traçabilité, premiers tests pédagogiques.
+Semaine 4 : Intégration speech, dashboard analytics, documentation, tests utilisateurs.
+En résumé :
+Ce plan permet de migrer progressivement vers une architecture robuste, modulaire et conforme à la vision scientifique et pédagogique du projet.
+Chaque étape peut être suivie comme une checklist pour garantir la cohérence et la qualité du développement.

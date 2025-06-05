@@ -1,0 +1,57 @@
+{
+  "testEnvironment": "jsdom",  "transform": {
+    "^.+\\.(ts|tsx)$": ["ts-jest", {
+      "tsconfig": "tsconfig.test.json",
+      "diagnostics": {
+        "ignoreCodes": [1343]
+      },
+      "astTransformers": {
+        "before": [
+          {
+            "path": "node_modules/ts-jest-mock-import-meta",
+            "options": { "metaObjects": { "url": "mock-url" } }
+          }
+        ]
+      }
+    }]
+  },
+  "moduleNameMapper": {
+    "^@/(.*)$": "<rootDir>/src/$1",
+    "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+    "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/src/tests/__mocks__/fileMock.js",
+    "\\.(glb|gltf)$": "<rootDir>/src/tests/__mocks__/fileMock.js"
+  },
+  "setupFilesAfterEnv": [
+    "<rootDir>/src/tests/setup.ts"
+  ],
+  "testMatch": [
+    "**/src/tests/__tests__/**/*.[jt]s?(x)",
+    "!**/src/tests/e2e/**/*.[jt]s?(x)"
+  ],
+  "moduleFileExtensions": [
+    "ts",
+    "tsx",
+    "js",
+    "jsx",
+    "json"
+  ],
+  "transformIgnorePatterns": [
+    "/node_modules/(?!(@react-three|three|bson|mongodb)/)"
+  ],  "testTimeout": 10000,
+  "collectCoverageFrom": [
+    "src/**/*.{ts,tsx}",
+    "!src/**/*.d.ts",
+    "!src/**/*.test.{ts,tsx}",
+    "!src/**/index.{ts,tsx}",
+    "!src/tests/**/*"
+  ],
+  "coverageThreshold": {
+    "global": {
+      "branches": 70,
+      "functions": 70,
+      "lines": 70,
+      "statements": 70
+    }
+  },
+  "verbose": true
+}
