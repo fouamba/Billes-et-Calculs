@@ -3,7 +3,7 @@ import { XAPIProvider } from '../../services/xapi';
 
 // Étendre le type de test pour inclure le provider xAPI
 export const test = base.extend<{ xapi: XAPIProvider }>({
-  xapi: async ({ page }, use) => {
+  xapi: async ({ page }, useXapi) => {
     // Créer une instance du provider xAPI pour les tests
     const xapi = new XAPIProvider({
       endpoint: process.env.LEARNING_LOCKER_ENDPOINT || 'http://localhost:8080/data/xAPI',
@@ -22,6 +22,6 @@ export const test = base.extend<{ xapi: XAPIProvider }>({
     });
 
     // Rendre le provider disponible pour les tests
-    await use(xapi);
+    await useXapi(xapi);
   }
 });

@@ -33,27 +33,9 @@ const config: PlaywrightTestConfig = {
   webServer: {
     command: 'npm run dev',
     port: 3000,
-    reuseExistingServer: !process.env.CI,
-  },
-};  viewport: { width: 1280, height: 720 },
-    screenshot: 'only-on-failure',
-  },
-  workers: 1, // Exécuter les tests séquentiellementtrace: 'retain-on-failure',
-  },
-  webServer: {
-    command: 'npm run dev',
-    port: 3000,
     timeout: 120000,
     reuseExistingServer: !process.env.CI,
   },
-  projects: [
-    {
-      name: 'Chrome',
-      use: {
-        browserName: 'chromium',
-      },
-    },
-  ],
 };
 
 export default config;

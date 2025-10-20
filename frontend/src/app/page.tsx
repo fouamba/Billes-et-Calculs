@@ -1,6 +1,7 @@
 'use client';
 import React, { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
+import StudentInput from '@/components/auth/StudentInput';
 
 export default function Home() {
   // States pour l'identification et les niveaux
@@ -9,13 +10,12 @@ export default function Home() {
   const [status, setStatus] = useState<'disconnected'|'pending'|'connected'>('disconnected');
   const [levelButtonsEnabled, setLevelButtonsEnabled] = useState(false);
   const [connectBtnText, setConnectBtnText] = useState("Se connecter");
-  const studentInputRef = useRef<HTMLInputElement>(null);
 
   // Gestion de l'input élève
-  const handleStudentInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const name = e.target.value.trim();
-    setStudentName(name);
-    if (name.length >= 2) {
+  const handleStudentInput = (name: string) => {
+    const trimmedName = name.trim();
+    setStudentName(trimmedName);
+    if (trimmedName.length >= 2) {
       setStatus('pending');
     } else {
       setStatus('disconnected');
@@ -81,10 +81,7 @@ export default function Home() {
 
   // Animation d'entrée progressive
   useEffect(() => {
-    // Focus auto sur l'input au chargement
-    setTimeout(() => {
-      studentInputRef.current?.focus();
-    }, 800);
+    // L'animation est maintenant gérée par le composant StudentInput
   }, []);
 
   // Animation des billes flottantes dans le header
@@ -178,16 +175,7 @@ export default function Home() {
               Identifie-toi pour sauvegarder tes progrès et accéder à tes niveaux personnalisés !
             </p>
             <div className="student-form">
-              <input
-                type="text"
-                className="student-input"
-                ref={studentInputRef}
-                placeholder="Tape ton prénom ici..."
-                value={studentName}
-                onChange={handleStudentInput}
-                maxLength={30}
-                autoComplete="off"
-              />
+              <StudentInput onStudentChange={handleStudentInput} />
               <div className={status === 'pending' ? 'student-status student-status--pending' : statusClass}>
                 {statusText}
               </div>
