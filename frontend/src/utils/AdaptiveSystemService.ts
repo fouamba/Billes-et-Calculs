@@ -31,7 +31,8 @@ export class AdaptiveSystemService {
     const difficulty = this.calculateDifficulty(
       cognitiveLoadFactor,
       conceptualizationLevel,
-      successRate
+      successRate,
+      game.level
     );
 
     const helpFrequency = this.calculateHelpFrequency(
@@ -76,12 +77,17 @@ export class AdaptiveSystemService {
   private calculateDifficulty(
     cognitiveLoad: number,
     conceptualization: number,
-    successRate: number
+    successRate: number,
+    level: number
   ): number {
     // Ajustement dynamique de la difficulté
     let difficulty = successRate * 0.4 +          // Performances actuelles
                     conceptualization * 0.4 +      // Niveau de compréhension
                     (1 - cognitiveLoad) * 0.2;    // Capacité cognitive
+
+    const normalizedLevel = Math.max(1, level);
+    const levelAdjustment = Math.min(0.2, (normalizedLevel - 1) * 0.07);
+    difficulty += levelAdjustment;
 
     // Lissage pour éviter les changements brusques
     difficulty = Math.max(0.2, Math.min(0.9, difficulty));
@@ -106,15 +112,19 @@ export class AdaptiveSystemService {
     cognitiveLoad: number,
     level: number
   ): number {
-    // Réduction progressive des aides visuelles avec le niveau
-    const baseAssistance = Math.max(0, 1 - (level - 1) * 0.2);
-    
-    // Augmentation si charge cognitive élevée
-    const assistanceBoost = cognitiveLoad > this.COGNITIVE_LOAD_THRESHOLD
-      ? (cognitiveLoad - this.COGNITIVE_LOAD_THRESHOLD) * 2
+    const normalizedLevel = Math.max(1, level);
+    const baseAssistance = Math.max(0.1, 1 - normalizedLevel * 0.25);
+
+    const highLoadBoost = cognitiveLoad > this.COGNITIVE_LOAD_THRESHOLD
+      ? (cognitiveLoad - this.COGNITIVE_LOAD_THRESHOLD) * 1.2
       : 0;
-    
-    return Math.min(1, Math.max(0, baseAssistance + assistanceBoost));
+
+    const lowLoadReduction = cognitiveLoad < 0.4
+      ? (0.4 - cognitiveLoad) * 0.6
+      : 0;
+
+    const assistance = baseAssistance + highLoadBoost - lowLoadReduction;
+    return Math.min(1, Math.max(0, assistance));
   }
 
   private calculateTimeLimit(
@@ -128,10 +138,10 @@ export class AdaptiveSystemService {
     
     // Ajout de temps si charge cognitive élevée
     const additionalTime = cognitiveLoad > this.COGNITIVE_LOAD_THRESHOLD
-      ? (cognitiveLoad - this.COGNITIVE_LOAD_THRESHOLD) * 15000
+      ? (cognitiveLoad - this.COGNITIVE_LOAD_THRESHOLD) * 40000
       : 0;
     
-    return Math.min(this.MAX_TIME_LIMIT, baseTime + additionalTime);
+    return Math.min(this.MAX_TIME_LIMIT, Math.max(this.MIN_TIME_LIMIT, baseTime + additionalTime));
   }
 
   public async updateParameters(): Promise<void> {

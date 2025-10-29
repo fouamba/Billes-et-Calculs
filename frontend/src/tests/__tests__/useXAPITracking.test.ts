@@ -48,12 +48,15 @@ describe('useXAPITracking', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (useGameStore as jest.Mock).mockReturnValue(mockGameState);
-    (useAnalyticsStore as jest.Mock).mockReturnValue(mockAnalyticsState);
-    jest.spyOn(global, 'Date').mockImplementation(() => new Date('2025-06-05T12:00:00Z'));
+    const mockedGameStore = useGameStore as unknown as jest.Mock;
+    const mockedAnalyticsStore = useAnalyticsStore as unknown as jest.Mock;
+    mockedGameStore.mockReturnValue(mockGameState);
+    mockedAnalyticsStore.mockReturnValue(mockAnalyticsState);
+    jest.useFakeTimers().setSystemTime(new Date('2025-06-05T12:00:00Z'));
   });
 
   afterEach(() => {
+    jest.useRealTimers();
     jest.restoreAllMocks();
   });
 
@@ -136,8 +139,8 @@ describe('useXAPITracking', () => {
 
     result.current.trackAction(action);
 
-    // Attendre que la promesse soit rejetée
-    await new Promise(process.nextTick);
+  // Attendre que la promesse soit rejetée
+  await Promise.resolve();
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       'Erreur lors de l\'envoi du statement:',

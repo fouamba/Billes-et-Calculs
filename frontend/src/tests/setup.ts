@@ -1,9 +1,39 @@
 import '@testing-library/jest-dom';
 
-const { React, ThreeFiberMocks, DreiMocks } = require('./__mocks__/react-three-mocks');
+const { ThreeFiberMocks, DreiMocks } = require('./__mocks__/react-three-mocks');
+const React = require('react');
 
-// Mock React
-jest.mock('react', () => React);
+const clientInternals =
+  React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE || {
+    H: null,
+    A: null,
+    T: null,
+    S: null,
+    V: null,
+    actQueue: null,
+    isBatchingLegacy: false,
+    didScheduleLegacyUpdate: false,
+    didUsePromise: false,
+    thrownErrors: [],
+    getCurrentStack: null,
+    recentlyCreatedOwnerStacks: 0
+  };
+
+if (!React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE) {
+  Object.defineProperty(React, '__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE', {
+    value: clientInternals,
+    configurable: true,
+    writable: true
+  });
+}
+
+if (!React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED) {
+  Object.defineProperty(React, '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED', {
+    value: clientInternals,
+    configurable: true,
+    writable: true
+  });
+}
 
 // Étendre les attentes de Jest
 expect.extend({
@@ -39,7 +69,7 @@ jest.mock('three', () => ({
 // Mock pour crypto.randomUUID
 global.crypto = {
   ...global.crypto,
-  randomUUID: () => 'test-uuid'
+  randomUUID: () => '00000000-0000-0000-0000-000000000000'
 };
 
 // Mock des stores
@@ -52,17 +82,6 @@ jest.mock('@/stores/userStore', () => ({
   })
 }));
 
-// Mock du service xAPI
-jest.mock('@/services/xapi.service', () => {
-  return {
-    XAPIService: jest.fn().mockImplementation(() => ({
-      trackMarbleManipulation: jest.fn().mockResolvedValue(undefined),
-      trackConceptualization: jest.fn().mockResolvedValue(undefined),
-      trackActivity: jest.fn().mockResolvedValue(undefined)
-    }))
-  };
-});
-
 // Mocks supplémentaires pour Three.js et WebGL
 const mockWebGLContext = {
   getParameter: jest.fn(),
@@ -70,9 +89,17 @@ const mockWebGLContext = {
   createBuffer: jest.fn(),
   bindBuffer: jest.fn(),
   bufferData: jest.fn(),
-};
+} as unknown as WebGLRenderingContext;
 
-HTMLCanvasElement.prototype.getContext = jest.fn(() => mockWebGLContext);
+const getContextMock = jest
+  .fn((contextId: string) => {
+    if (contextId === 'webgl' || contextId === 'webgl2') {
+      return mockWebGLContext;
+    }
+    return null;
+  });
+
+HTMLCanvasElement.prototype.getContext = getContextMock as unknown as typeof HTMLCanvasElement.prototype.getContext;
 
 // Mock pour les modèles 3D
 jest.mock('@react-three/drei', () => ({

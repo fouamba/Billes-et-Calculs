@@ -31,6 +31,9 @@ const DreiMocks = {
     animations: [],
     scene: { clone: jest.fn() }
   }),
+  useAnimations: jest.fn().mockReturnValue({
+    actions: {}
+  }),
   Html: jest.fn(({ children }) => children),
   OrbitControls: jest.fn(() => null)
 };

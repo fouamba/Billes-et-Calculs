@@ -1,12 +1,15 @@
-import { Statement } from '@xapi/xapi';
 import { MarbleInteraction, ConceptualizationData } from '@/types/analytics';
+
+type XAPIStatement = Record<string, unknown>;
 
 export class XAPIService {
   private endpoint: string;
   private auth: string;
-  private batchQueue: Statement[] = [];
+  private batchQueue: XAPIStatement[] = [];
   private readonly batchSize = 50;
   private readonly flushInterval = 5000;
+  private forceArrayPayload = false;
+  private flushTimer?: NodeJS.Timeout;
   
   constructor() {
     this.endpoint = process.env.LEARNING_LOCKER_ENDPOINT!;
@@ -14,53 +17,78 @@ export class XAPIService {
       `${process.env.LL_KEY}:${process.env.LL_SECRET}`
     ).toString('base64');
 
-    setInterval(() => this.flush(), this.flushInterval);
+    this.flushTimer = setInterval(() => {
+      void this.flush();
+    }, this.flushInterval);
+
+    if (typeof this.flushTimer.unref === 'function') {
+      this.flushTimer.unref();
+    }
   }
   
-  private async sendBatch(statements: Statement[]): Promise<void> {
+  private async sendBatch(statements: XAPIStatement[]): Promise<void> {
     if (statements.length === 0) return;
 
+    const payload = statements.length === 1 && !this.forceArrayPayload
+      ? statements[0]
+      : statements;
+
     try {
-      await fetch(`${this.endpoint}/data/xAPI/statements`, {
+      const response = await fetch(`${this.endpoint}/data/xAPI/statements`, {
         method: 'POST',
         headers: {
           'Authorization': `Basic ${this.auth}`,
           'Content-Type': 'application/json',
           'X-Experience-API-Version': '1.0.3'
         },
-        body: JSON.stringify(statements)
+        body: JSON.stringify(payload)
       });
+
+      if (!response.ok) {
+        throw new Error(`Learning Locker returned ${response.status}`);
+      }
+
+      this.forceArrayPayload = false;
     } catch (error) {
       console.error('Erreur lors de l\'envoi des statements xAPI:', error);
       // Remettre les statements dans la queue en cas d'échec
-      this.batchQueue.push(...statements);
+      this.batchQueue = [...statements, ...this.batchQueue];
+      this.forceArrayPayload = true;
     }
   }
 
-  private async flush(): Promise<void> {
+  public async flush(): Promise<void> {
     const batch = [...this.batchQueue];
     this.batchQueue = [];
     await this.sendBatch(batch);
   }
 
-  private queueStatement(statement: Partial<Statement>): void {
-    const fullStatement: Statement = {
+  private queueStatement(statement: Record<string, unknown>): void {
+    const fullStatement: XAPIStatement = {
       ...statement,
       id: crypto.randomUUID(),
-      timestamp: new Date().toISOString(),
-      actor: {
+      timestamp: new Date().toISOString()
+    };
+
+    if (!('actor' in fullStatement)) {
+      (fullStatement as { actor: { account: { name: string; homePage: string } } }).actor = {
         account: {
-          name: statement.actor?.account?.name || 'anonymous',
-          homePage: "https://addlearn.app"
+          name: 'anonymous',
+          homePage: 'https://addlearn.app'
         }
-      }
-    } as Statement;
+      };
+    }
 
     this.batchQueue.push(fullStatement);
     
     if (this.batchQueue.length >= this.batchSize) {
       void this.flush();
     }
+  }
+
+  public async sendStatement(statement: Record<string, unknown>): Promise<void> {
+    this.queueStatement(statement);
+    await this.flush();
   }
 
   async trackMarbleManipulation(data: MarbleInteraction): Promise<void> {

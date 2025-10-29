@@ -10,7 +10,7 @@ import { Vector3 } from 'three';
 describe('XAPI Integration', () => {
   let xapiService: XAPIService;
   let mockFetch: jest.Mock;
-    beforeEach(() => {
+  beforeEach(() => {
     // Mock des variables d'environnement
     process.env.LEARNING_LOCKER_ENDPOINT = 'http://localhost:8080/data/xAPI';
     process.env.LL_KEY = 'testkey';
@@ -34,7 +34,8 @@ describe('XAPI Integration', () => {
 
       mockFetch.mockResolvedValueOnce({ ok: true, json: () => Promise.resolve({}) });
 
-      await xapiService.trackMarbleManipulation(marbleData);
+  await xapiService.trackMarbleManipulation(marbleData);
+  await xapiService.flush();
 
       expect(global.fetch).toHaveBeenCalledWith(
         expect.stringContaining('/data/xAPI/statements'),
@@ -73,7 +74,8 @@ describe('XAPI Integration', () => {
 
       (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: true });
 
-      await xapiService.trackConceptualization(conceptData);
+  await xapiService.trackConceptualization(conceptData);
+  await xapiService.flush();
 
       const [, { body }] = (global.fetch as jest.Mock).mock.calls[0];
       const statement = JSON.parse(body);
@@ -111,7 +113,7 @@ describe('XAPI Integration', () => {
       }
 
       // Attendre que le batch soit traité
-      await new Promise(resolve => setTimeout(resolve, 100));
+  await xapiService.flush();
 
       // Vérifier que fetch n'a pas été appelé 10 fois
       expect(global.fetch).toHaveBeenCalledTimes(1);
@@ -138,6 +140,7 @@ describe('XAPI Integration', () => {
         duration: 1000,
         interactionType: 'click'
       });
+  await xapiService.flush();
 
       expect(consoleError).toHaveBeenCalled();
       expect(xapiService['batchQueue'].length).toBeGreaterThan(0);
@@ -162,7 +165,8 @@ describe('XAPI Integration', () => {
       });
 
       // Attendre le retry
-      await new Promise(resolve => setTimeout(resolve, 5100));
+  await xapiService.flush();
+  await xapiService.flush();
 
       expect(global.fetch).toHaveBeenCalledTimes(2);
       

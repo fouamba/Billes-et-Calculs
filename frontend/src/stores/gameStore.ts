@@ -32,7 +32,7 @@ interface GameState {
   };
 }
 
-const initialState = {
+const initialState: Omit<GameState, 'actions'> = {
   level: 1,
   marbles: [],
   score: 0,
@@ -139,7 +139,7 @@ export const useGameStore = create<GameState>()(
         },
 
         resetGame: () => {
-          set(initialState);
+          set(() => ({ ...initialState }));
           useAnalyticsStore.getState().actions.resetSession();
         }
       }

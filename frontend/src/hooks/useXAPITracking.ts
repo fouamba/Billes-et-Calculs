@@ -4,6 +4,7 @@ import { useAnalyticsStore } from '../stores/analyticsStore';
 import { XAPIService } from '../services/xapi.service';
 
 export interface XAPIStatement {
+  [key: string]: unknown;
   actor: {
     name: string;
     mbox: string;
@@ -122,7 +123,7 @@ export const useXAPITracking = () => {
         } : undefined
       };
     }    // Envoyer le statement au LRS
-    xapiService.sendStatement(statement).catch(error => {
+  xapiService.sendStatement(statement).catch((error: unknown) => {
       console.error('Erreur lors de l\'envoi du statement:', error);
     });
     
