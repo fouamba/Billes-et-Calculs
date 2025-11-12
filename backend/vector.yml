@@ -1,0 +1,24 @@
+data_dir: /tmp/vector
+
+sources:
+  docker:
+    type: docker_logs
+
+transforms:
+  parse_logs:
+    type: remap
+    inputs:
+      - docker
+    source: |
+      . = parse_json!(.message)
+
+sinks:
+  logflare:
+    type: http
+    inputs:
+      - parse_logs
+    uri: http://analytics:4000/api/logs
+    encoding:
+      codec: json
+    headers:
+      X-API-KEY: "${LOGFLARE_API_KEY}"

@@ -1,0 +1,19 @@
+# Fichiers de configuration Supabase
+.env.supabase
+*.env
+
+# Données persistantes Docker
+postgres_data/
+storage_data/
+
+# Logs
+*.log
+logs/
+
+# Backups
+backups/
+*.sql.gz
+
+# OS
+.DS_Store
+Thumbs.db
